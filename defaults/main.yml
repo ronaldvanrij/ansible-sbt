@@ -1,0 +1,20 @@
+---
+## Which sbt version to use:
+## - 0.13.12
+sbt_version: 0.13.12
+
+## Which environment to deploy:
+## - devel: provision devel-time environment for developing
+## - build: provision build-time environment for packaging
+sbt_environment: devel
+
+# Install from which source?
+# - binaries: install from binary tarball
+# - packages: install from automatically downloaded RPM/DEB packages (n/a)
+# - repositories: install from YUM/APT repositories
+sbt_install_from: repositories
+
+## Cache directory for holding downloaded/generated files.
+## The default is /vagrant/files so cache persist between boxes.
+sbt_cache_dir: /vagrant/files
+

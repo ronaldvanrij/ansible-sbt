@@ -1,0 +1,20 @@
+galaxy_info:
+  author: jeffhung
+  description: Ansible playbook for installing Scala on CentOS/Debian Linux
+  license: BSD
+
+  platforms:
+  - name: EL
+    versions:
+     - 6
+  - name: Ubuntu
+    versions:
+     - trusty
+
+  galaxy_tags:
+    - cloud
+    - system
+
+dependencies:
+  - jeffhung.java-se
+

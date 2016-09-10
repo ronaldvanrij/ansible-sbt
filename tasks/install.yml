@@ -1,0 +1,4 @@
+---
+- name: Install sbt from {{ sbt_install_from }}
+  include: "install_from_{{ sbt_install_from }}.yml"
+

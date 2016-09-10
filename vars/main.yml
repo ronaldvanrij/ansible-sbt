@@ -1,0 +1,6 @@
+---
+# https://dl.bintray.com/sbt/native-packages/sbt/0.13.12/sbt-0.13.12.tgz
+sbt_url_base: "https://dl.bintray.com/sbt/native-packages/sbt"
+
+sbt_dir_base: /opt
+

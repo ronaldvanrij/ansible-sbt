@@ -1,0 +1,41 @@
+---
+- name: Install libselinux-python
+  yum:  state=present pkg=libselinux-python
+  when: ansible_pkg_mgr == 'yum'
+  become: true
+
+- name: Set sbt_bundle_name
+  set_fact:
+    sbt_bundle_name: "sbt-{{ sbt_version }}"
+- debug: var=sbt_bundle_name
+
+#- name: Load sbt binary tarbll MD5
+#  set_fact:
+#    sbt_binary_md5: "{{ item.split(': ')|last|replace(' ', '')|lower }}"
+#  with_url: [ "{{ sbt_url_base }}/{{ sbt_version }}/{{ sbt_bundle_name }}.tgz.md5" ]
+#- debug: var=sbt_binary_md5
+
+- name: Download sbt binary tarball
+  get_url:
+    url: "{{ sbt_url_base }}/{{ sbt_version }}/{{ sbt_bundle_name }}.tgz"
+    dest: "{{ sbt_cache_dir }}/{{ sbt_bundle_name }}.tgz"
+#   checksum: md5:{{ sbt_binary_md5 }}
+
+- name: Ensure {{ sbt_dir_base }} exists
+  file: path={{ sbt_dir_base }} state=directory
+  become: yes
+
+- name: Unpack sbt distribution
+  unarchive:
+    src:   "{{ sbt_bundle_name }}.tgz"
+    dest:  "{{ sbt_dir_base }}"
+    owner: root
+    group: root
+#   creates: "{{ sbt_dir_base }}/sbt/bin/sbt"
+  become: yes
+
+- name: Set environment variables globally
+  template: src=profile.sh.j2 dest=/etc/profile.d/sbt.sh
+  become: true
+
+

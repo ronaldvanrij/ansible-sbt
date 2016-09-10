@@ -1,0 +1,37 @@
+---
+# See: http://www.scala-sbt.org/0.13/docs/Installing-sbt-on-Linux.html
+
+- block:
+
+# - name: Install bintray yum repository (ansible >= 2.1)
+#   yum_repository:
+#     state:         present
+#     name:          bintray-sbt-rpm
+#     description:   bintray-sbt-rpm - packages by sbt from Bintray
+#     file:          bintray-sbt-rpm
+#     baseurl:       http://dl.bintray.com/sbt/rpm
+#     gpgcheck:      no
+#     repo_gpgcheck: no
+#     enabled:       yes
+
+  - debug: var=ansible_version
+
+  - name: Install bintray yum repository (ansible < 2.1)
+    get_url:
+      url:  https://bintray.com/sbt/rpm/rpm
+      dest: /etc/yum.repos.d/bintray-sbt.repo
+
+  - name: Ensure sbt is installed (yum)
+    yum: state=present name=sbt
+
+  when: ansible_pkg_mgr == 'yum'
+  become: yes
+
+- block:
+
+  - name: Ensure sbt is installed (apt)
+    apt: state=present name=sbt
+
+  when: ansible_pkg_mgr == 'apt'
+  become: yes
+
